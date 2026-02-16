@@ -1,7 +1,5 @@
-import 'package:sem_4_flutter/project/UserList.dart';
-import 'package:sem_4_flutter/project/favouriteuser.dart';
-import 'package:sem_4_flutter/project/homepage.dart';
 import 'package:flutter/material.dart';
+import 'package:sem_4_flutter/project/bottom_nav.dart';
 
 class AboutUs extends StatefulWidget {
   const AboutUs({super.key});
@@ -12,24 +10,6 @@ class AboutUs extends StatefulWidget {
 
 class _AboutusState extends State<AboutUs> {
   int _selectedIndex = 3;
-
-  void _onItemTapped(int index) {
-    if (index == 0) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Homepage()));
-    } else if (index == 1) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => UserList(users: [], favoriteUsers: [])));
-    } else if (index == 2) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Favourite()));
-    } else if (index == 3) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => AboutUs()));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,21 +82,7 @@ class _AboutusState extends State<AboutUs> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        // <-- This works for fixed
-        selectedItemColor: Colors.greenAccent,
-        unselectedItemColor: Colors.grey,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Homepage'),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Userlist'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favorites'),
-          BottomNavigationBarItem(icon: Icon(Icons.info), label: 'AboutUs'),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
+      bottomNavigationBar: AppBottomNav(currentIndex: _selectedIndex),
     );
   }
 

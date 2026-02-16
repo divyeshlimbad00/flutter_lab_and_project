@@ -1,11 +1,9 @@
-import 'package:sem_4_flutter/project/aboutus.dart';
 import 'package:sem_4_flutter/project/adduser.dart';
-import 'package:sem_4_flutter/project/favouriteuser.dart';
-import 'package:sem_4_flutter/project/homepage.dart';
 import 'package:flutter/material.dart';
 import 'Updateuser.dart';
 import 'userdetail.dart';
 import 'database/database_helper.dart';
+import 'package:sem_4_flutter/project/bottom_nav.dart';
 
 class UserList extends StatefulWidget {
   final List<Map<String, dynamic>> users;
@@ -57,24 +55,6 @@ class _UserListState extends State<UserList> {
 
   int _selectedIndex = 1;
 
-  void _onItemTapped(int index) {
-    if (index == 0) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Homepage()));
-    } else if (index == 1) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => UserList(users: [], favoriteUsers: [])));
-    } else if (index == 2) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Favourite()));
-    } else if (index == 3) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => AboutUs()));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final filteredUsers = widget.users.where((user) {
@@ -89,7 +69,7 @@ class _UserListState extends State<UserList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('User  List'),
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.pinkAccent,
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -165,9 +145,9 @@ class _UserListState extends State<UserList> {
                   elevation: 0,
                   color: Colors.transparent,
                   child: Container(
-                    decoration: BoxDecoration(
+                      decoration: BoxDecoration(
                       color: Colors.pink[50],
-                      border: Border.all(color: Colors.pink, width: 2),
+                      border: Border.all(color: Colors.pinkAccent, width: 2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
@@ -282,21 +262,7 @@ class _UserListState extends State<UserList> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        // <-- This works for fixed
-        selectedItemColor: Colors.greenAccent,
-        unselectedItemColor: Colors.grey,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Homepage'),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Userlist'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favorites'),
-          BottomNavigationBarItem(icon: Icon(Icons.info), label: 'AboutUs'),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
+      bottomNavigationBar: AppBottomNav(currentIndex: _selectedIndex),
     );
   }
 

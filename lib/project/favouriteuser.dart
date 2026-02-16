@@ -1,11 +1,8 @@
 import 'package:sem_4_flutter/project/Updateuser.dart';
-import 'package:sem_4_flutter/project/aboutus.dart';
 import 'package:sem_4_flutter/project/database/database_helper.dart';
-import 'package:sem_4_flutter/project/homepage.dart';
 import 'package:sem_4_flutter/project/userdetail.dart';
-import 'package:sem_4_flutter/project/userlist.dart';
+import 'package:sem_4_flutter/project/bottom_nav.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Favourite extends StatefulWidget {
   @override
@@ -23,24 +20,6 @@ class _FavouriteState extends State<Favourite> {
   }
 
   int _selectedIndex = 2; // Default to Favorite Page
-
-  void _onItemTapped(int index) {
-    if (index == 0) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Homepage()));
-    } else if (index == 1) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => UserList(users: [], favoriteUsers: [])));
-    } else if (index == 2) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Favourite()));
-    } else if (index == 3) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => AboutUs()));
-    }
-  }
 
   Future<void> _loadFavoriteUsers() async {
     final dbHelper = DatabaseHelper();
@@ -69,7 +48,7 @@ class _FavouriteState extends State<Favourite> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favorite Users'),
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.pinkAccent,
         centerTitle: true,
         elevation: 5,
       ),
@@ -221,21 +200,7 @@ class _FavouriteState extends State<Favourite> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        // <-- This works for fixed
-        selectedItemColor: Colors.greenAccent,
-        unselectedItemColor: Colors.grey,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Homepage'),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Userlist'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favorites'),
-          BottomNavigationBarItem(icon: Icon(Icons.info), label: 'AboutUs'),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
+      bottomNavigationBar: AppBottomNav(currentIndex: _selectedIndex),
     );
   }
 
